@@ -1,6 +1,9 @@
-package net.djhurley.footballapp.utils;
+package net.djhurley.footballapp.tasks;
 
-import org.json.JSONArray;
+import android.app.Activity;
+import android.os.AsyncTask;
+
+import net.djhurley.footballapp.FootballAppActivity;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -9,14 +12,24 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import static net.djhurley.footballapp.common.Constants.*;
+import static net.djhurley.footballapp.common.Constants.FOOTBALL_API_TOKEN_KEY;
+import static net.djhurley.footballapp.common.Constants.GET_REQUEST;
+import static net.djhurley.footballapp.common.Constants.X_AUTH_TOKEN;
 
 /**
- * Created by djhurley on 16/01/16.
+ * Created by djhurley on 23/01/16.
  */
-public class HttpUtilities {
+public class FootballDataRequestTask extends AsyncTask<String, String, String> {
+    private FootballAppActivity activity;
 
-    public static String getStringResponse(String urlAddress){
+    public FootballDataRequestTask(FootballAppActivity activity) {
+        super();
+        this.activity = activity;
+    }
+
+    @Override
+    protected String doInBackground(String... args) {
+        String urlAddress = args[0];
         StringBuilder result = new StringBuilder();
         HttpURLConnection urlConnection = null;
 
@@ -43,5 +56,10 @@ public class HttpUtilities {
 
 
         return result.toString();
+    }
+
+    @Override
+    protected void onPostExecute(String json) {
+        activity.updateUI(json);
     }
 }

@@ -10,7 +10,6 @@ public class Constants {
 
     //URLs
     public static final String SEASONS_URL = "http://api.football-data.org/v1/soccerseasons";
-    public static final String SEASON_URL = "http://api.football-data.org//v1/soccerseasons/{id}/teams";
 
     //JSON Keys
     public static final String CAPTION_KEY = "caption";
